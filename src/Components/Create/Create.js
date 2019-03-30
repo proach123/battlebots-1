@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
+
 
 
 class Create extends Component {
   constructor(){
     super()
-    this.state ={
+    this.state = {
       name: '',
       hp: 0,
       atk: 0,
@@ -13,9 +15,12 @@ class Create extends Component {
     }
   }
 
-  CreateBot = () => {
-    console.log(this.state)
+componentDidMount(){
 
+}
+  CreateBot = async() => {
+    await this.props.dummyArr.push(this.state)
+      this.props.history.push('/Collection')
   }
   updateState(value, key){
     this.setState({
@@ -38,13 +43,23 @@ class Create extends Component {
     })
   }
   IncreaseStat(stat){
-    if(this.state.money>0){this.setState({
-  [stat]: ++this.state[stat],
-  money: --this.state.money
-})}
-  
+    if(this.state.money>0){
+      this.setState({
+        [stat]: ++this.state[stat],
+        money: --this.state.money
+      })
+    }
+  }
+  DecreaseStat(stat){
+    if(this.state[stat]>0){
+      this.setState({
+        [stat]: --this.state[stat],
+        money: ++this.state.money
+      })
+    }
   }
   render() {
+    console.log(this.props)
     return (
       <div className="Create">
         <div className='CreateBotBoxDiv'>
@@ -52,7 +67,7 @@ class Create extends Component {
         <div className='InputDivBox'>
           <div>
             Name:
-            {/* <input type="text" className='InputDiv' onChange={e => this.updateName(e.target.value,'name')}/> */}
+            <input type="text" className='InputDiv' onChange={e => this.updateName(e.target.value,'name')}/>
             {this.state.name}
           </div>
           <br/>
@@ -60,21 +75,24 @@ class Create extends Component {
             HP:
             {/* <input type="integer" placeholder='name' className='InputDiv' onChange={e => this.updateState(e.target.value,'hp')}/> */}
          
-            <button onClick={() => this.IncreaseStat('hp')}>Add HP</button>
+            <button onClick={() => this.IncreaseStat('hp')}>+ HP</button>
+            <button onClick={() => this.DecreaseStat('hp')}>- HP</button>
             {this.state.hp}
           </div>
           <br/>
           <div>
             Attack
             {/* <input type="integer" placeholder='atk' className='InputDiv' onChange={e => this.updateState(e.target.value,'atk')}/> */}
-            <button onClick={() => this.IncreaseStat('atk')}>Add atk</button>
+            <button onClick={() => this.IncreaseStat('atk')}>+ atk</button>
+            <button onClick={() => this.DecreaseStat('atk')}>- atk</button>
             {this.state.atk}
           </div>
           <br/>
           <div>
             Defense:
             {/* <input type="integer" placeholder='def' className='InputDiv' onChange={e => this.updateState(e.target.value,'def')}/> */}
-            <button onClick={() => this.IncreaseStat('def')}>Add Def</button>
+            <button onClick={() => this.IncreaseStat('def')}>+ Def</button>
+            <button onClick={() => this.DecreaseStat('def')}>- Def</button>
             {this.state.def}
             
           </div>
@@ -83,7 +101,7 @@ class Create extends Component {
           
 
           <h3>{this.state.money}</h3>
-          <div><button onClick={() => this.CreateBot()}>Create</button></div>
+          <div><button onClick= {() => this.CreateBot()}>Create</button></div>
           <div><button onClick={() => this.ClearState()}>Clear</button></div>
         </div>
      
@@ -92,4 +110,16 @@ class Create extends Component {
   }
 }
 
-export default Create;
+const mapStateToProps = (reduxState) => {
+  return {
+   dummyArr: reduxState.dummyArr
+  }
+}
+
+const mapDispatchToProps = {
+  
+}
+
+export default connect (mapStateToProps, mapDispatchToProps)(Create)
+
+
