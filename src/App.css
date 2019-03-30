@@ -33,7 +33,7 @@
 }
 .CreateBotBoxDiv{
   background-color: gold;
-  height: 20em;
+  height: 60vh;
   width: 30em;
   border: solid black 1px;
   display: flex;
@@ -42,27 +42,31 @@
   padding: 3em;
 
 }
-
+.Collection{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh
+}
 .BattleDiv{
-  height: 300px;
+  min-height: 350px;
   background-color: gold;
   height: 200px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 20px
- 
+  justify-content: center; 
 }
 .CollectionDiv{
   display: flex;
   justify-content: space-around;
+  align-items: center;
   background-color: aqua;
-  min-height: 75vh;
+  min-height: 50vh;
 }
 .FightingBot{
   border: solid black 1px;
-  height: 200px;
-  width: 400px;
+  height: 85%;
+  width: 350px;
   background-color: white
 }
 .SingleBot{

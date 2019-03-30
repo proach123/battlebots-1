@@ -11,6 +11,9 @@ class Create extends Component {
       hp: 0,
       atk: 0,
       def: 0,
+      speed: 1,
+      special: '',
+      ulti: '',
       money: 30
     }
   }
@@ -80,7 +83,37 @@ componentDidMount(){
       })
     }
   }
+  IncreaseSpeed(stat){
+    if(this.state.money>0){
+      this.setState({
+        [stat]: this.state[stat]+1,
+        money: this.state.money-5
+      })
+    }
+  }
+  DecreaseSpeed(stat){
+    if(this.state[stat]>0){
+      this.setState({
+        [stat]: this.state[stat]-1,
+        money: this.state.money+5
+      })
+    }
+  }
+  ChooseSpecial(choice){ 
+    if(choice === 'atk'){   
+      this.setState({
+        special: 'Deal 3 damage when charge is full',    
+        ulti: 'deal'   
+      })}    
+    if(choice === 'heal'){   
+      this.setState({
+        special: 'heal 4 damage when charge is full',  
+        ulti: 'heal'     
+      })}    
+  }
+  
   render() {
+    
     return (
       <div className="Create">
         <div className='CreateBotBoxDiv'>
@@ -93,9 +126,7 @@ componentDidMount(){
           </div>
           <br/>
           <div>
-            HP:
-            {/* <input type="integer" placeholder='name' className='InputDiv' onChange={e => this.updateState(e.target.value,'hp')}/> */}
-         
+            HP:     
             <button onClick={() => this.IncreaseHP('hp')}>+ HP</button>
             <button onClick={() => this.DecreaseHP('hp')}>- HP</button>
             {this.state.hp}  (Costs 1)
@@ -103,22 +134,36 @@ componentDidMount(){
           <br/>
           <div>
             Attack
-            {/* <input type="integer" placeholder='atk' className='InputDiv' onChange={e => this.updateState(e.target.value,'atk')}/> */}
-            <button onClick={() => this.IncreaseStat('atk')}>+ atk</button>
+                 <button onClick={() => this.IncreaseStat('atk')}>+ atk</button>
             <button onClick={() => this.DecreaseStat('atk')}>- atk</button>
             {this.state.atk}  (Costs 2)
           </div>
           <br/>
           <div>
             Defense:
-            {/* <input type="integer" placeholder='def' className='InputDiv' onChange={e => this.updateState(e.target.value,'def')}/> */}
             <button onClick={() => this.IncreaseStat('def')}>+ Def</button>
             <button onClick={() => this.DecreaseStat('def')}>- Def</button>
-            {this.state.def}(Costs 2)
+            {this.state.def}(Costs 2)            
+          </div>
+          <br/>
+            Speed:
+            <button onClick={() => this.IncreaseSpeed('speed')}>+ Speed</button>
+            <button onClick={() => this.DecreaseSpeed('speed')}>- Speed</button>
+            {this.state.speed}(Costs 5)
             
           </div>
           <br/>
-        </div>
+          <div>
+            Special:              
+            <button onClick={() => this.ChooseSpecial('atk')}>Atk</button>
+            <button onClick={() => this.ChooseSpecial('heal')}>Heal</button>
+            <br/>
+            <br/>
+            {this.state.special} 
+          </div>
+          
+          <br/>
+        
           <h3>Money:{this.state.money}</h3>
           <div><button onClick= {() => this.CreateBot()}>Create</button></div>
           <div><button onClick={() => this.ClearState()}>Clear</button></div>

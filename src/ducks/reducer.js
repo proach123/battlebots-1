@@ -3,20 +3,34 @@ const initialState = {
     {
       name: 'Bob',
       hp: 10,
-      atk: 5,
-      def: 5
+      atk: 1,
+      def: 2,
+      speed: 4,
+      ulti: 'atk',
     },
     {
       name: 'Harry',
-      hp: 20,
-      atk: 5,
-      def: 10
+      hp: 15,
+      atk: 4,
+      def: 0,
+      speed: 1,
+      ulti: 'atk',
     },
     {
       name: 'Steve',
-      hp: 20,
-      atk: 10,
-      def: 0
+      hp: 10,
+      atk: 1,
+      def: 7,
+      speed: 1,
+      ulti: 'atk',
+    },
+    {
+      name: 'Bob2',
+      hp: 1,
+      atk: 1,
+      def: 2,
+      speed: 4,
+      ulti: 'atk',
     },
   ]
  
