@@ -11,32 +11,36 @@ class Collection extends Component {
         {
           name: 'Bob',
           hp: 10,
-          atk: 5,
-          def: 5
-        },
-        {
-          name: 'Harry',
-          hp: 20,
-          atk: 5,
+          atk: 10,
           def: 10
         },
         {
-          name: 'Steve',
-          hp: 20,
+          name: 'Harry',
+          hp: 15,
           atk: 10,
-          def: 0
+          def: 5
         },
-      ]
+        {
+          name: 'Steve',
+          hp: 10,
+          atk: 15,
+          def: 15
+        },
+      ],
+      hp1:0,
+      hp2: 0
     }
   }
-  AddToArena(name){
+  AddToArena(bot){
     if(!this.state.bot1.name){
       this.setState({
-        bot1: name
+        bot1: bot,
+        hp1: bot.hp
       })
     }else{ 
       this.setState({
-        bot2: name
+        bot2: bot,
+        hp2: bot.hp
       })
     }
   }
@@ -46,29 +50,61 @@ class Collection extends Component {
       bot2: ''
     })
   }
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+  randomAtk1(){
+    let num = this.getRandomInt(3)
+    if(num===0){
+      alert(`Bot 1's attack wasn't very effective`)
+    }else if(num===2){alert(`Bot 1 scored a critical hit!!`)}
+    else{alert(` Bot 1 attacks.....`)}
+    return num
+  }
+  randomAtk2(){
+    let num = this.getRandomInt(3)
+    if(num===0){
+      alert(`Bot 2's attack wasn't very effective`)
+    }else if(num===2){alert(`Bot 2 scored a critical hit!!`)}
+    else{alert(` Bot 2 attacks.....`)}
+    return num
+  }
   Fight(){
+    let {hp1, hp2} =this.state
     let bot1 = this.state.bot1
     let bot2 = this.state.bot2
-    console.log({bot1}, {bot2})
+  
+    console.log(hp2, hp1)
     if(bot2.hp>0){
-      bot2.hp = bot2.hp - (bot1.atk>bot2.def ? bot1.atk-bot2.def : 1)
-      console.log(bot2.hp)
+      bot2.hp = bot2.hp - (this.randomAtk1()*bot1.atk>bot2.def ? bot1.atk-bot2.def : 1)
     }else{
+      bot1.hp = hp1
+      bot2.hp = hp2
+      this.setState({
+        bot1: bot1,
+        bot2: bot2
+      })
       alert(`${this.state.bot1.name} Wins`)
     }
     if(bot1.hp>0){
-      bot1.hp = bot1.hp - (bot2.atk>bot1.def ? bot2.atk-bot1.def : 1)
+      bot1.hp = bot1.hp - (this.randomAtk2()*bot2.atk>bot1.def ? bot2.atk-bot1.def : 1)
     }else{
+      bot1.hp = hp1
+      bot2.hp = hp2
+      this.setState({
+        bot1: bot1,
+        bot2: bot2
+      })
       alert(`${this.state.bot2.name} Wins`)
     }
-    console.log({bot1}, {bot2})
+
     this.setState({
       bot1: bot1,
       bot2: bot2
     })
   }
   render() {
-    console.log(this.props)
+  
     const collectionDiv = this.props.dummyArr.map( bot => {
       return <div className='SingleBot'>
         <h1>Name: {bot.name}</h1>
@@ -115,7 +151,6 @@ class Collection extends Component {
 }
 
 const mapStateToProps = (reduxState) => {
-  console.log(11111, reduxState)
   return {
    dummyArr: reduxState.dummyArr
   }

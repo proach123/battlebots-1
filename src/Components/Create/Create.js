@@ -28,6 +28,12 @@ componentDidMount(){
       money: this.state.money - value
     })
   }
+  updateState(value, key){
+    this.setState({
+      [key]: value,
+      money: this.state.money - value
+    })
+  }
   ClearState(){
     this.setState({
       name: '',
@@ -42,7 +48,7 @@ componentDidMount(){
       [key]: value
     })
   }
-  IncreaseStat(stat){
+  IncreaseHP(stat){
     if(this.state.money>0){
       this.setState({
         [stat]: ++this.state[stat],
@@ -50,7 +56,7 @@ componentDidMount(){
       })
     }
   }
-  DecreaseStat(stat){
+  DecreaseHP(stat){
     if(this.state[stat]>0){
       this.setState({
         [stat]: --this.state[stat],
@@ -58,8 +64,23 @@ componentDidMount(){
       })
     }
   }
+  IncreaseStat(stat){
+    if(this.state.money>0){
+      this.setState({
+        [stat]: this.state[stat]+2,
+        money: this.state.money-2
+      })
+    }
+  }
+  DecreaseStat(stat){
+    if(this.state[stat]>0){
+      this.setState({
+        [stat]: this.state[stat]-2,
+        money: this.state.money+2
+      })
+    }
+  }
   render() {
-    console.log(this.props)
     return (
       <div className="Create">
         <div className='CreateBotBoxDiv'>
@@ -75,9 +96,9 @@ componentDidMount(){
             HP:
             {/* <input type="integer" placeholder='name' className='InputDiv' onChange={e => this.updateState(e.target.value,'hp')}/> */}
          
-            <button onClick={() => this.IncreaseStat('hp')}>+ HP</button>
-            <button onClick={() => this.DecreaseStat('hp')}>- HP</button>
-            {this.state.hp}
+            <button onClick={() => this.IncreaseHP('hp')}>+ HP</button>
+            <button onClick={() => this.DecreaseHP('hp')}>- HP</button>
+            {this.state.hp}  (Costs 1)
           </div>
           <br/>
           <div>
@@ -85,7 +106,7 @@ componentDidMount(){
             {/* <input type="integer" placeholder='atk' className='InputDiv' onChange={e => this.updateState(e.target.value,'atk')}/> */}
             <button onClick={() => this.IncreaseStat('atk')}>+ atk</button>
             <button onClick={() => this.DecreaseStat('atk')}>- atk</button>
-            {this.state.atk}
+            {this.state.atk}  (Costs 2)
           </div>
           <br/>
           <div>
@@ -93,14 +114,12 @@ componentDidMount(){
             {/* <input type="integer" placeholder='def' className='InputDiv' onChange={e => this.updateState(e.target.value,'def')}/> */}
             <button onClick={() => this.IncreaseStat('def')}>+ Def</button>
             <button onClick={() => this.DecreaseStat('def')}>- Def</button>
-            {this.state.def}
+            {this.state.def}(Costs 2)
             
           </div>
           <br/>
         </div>
-          
-
-          <h3>{this.state.money}</h3>
+          <h3>Money:{this.state.money}</h3>
           <div><button onClick= {() => this.CreateBot()}>Create</button></div>
           <div><button onClick={() => this.ClearState()}>Clear</button></div>
         </div>
